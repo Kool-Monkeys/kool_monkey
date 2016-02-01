@@ -81,3 +81,6 @@ rpm-build:
 
 docker-agent: install
 	docker build -t kool-agent -f Dockerfile.agent .
+
+docker-database: install
+	docker build -t kool-database -f Dockerfile.database .

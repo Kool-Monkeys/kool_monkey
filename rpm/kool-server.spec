@@ -87,8 +87,8 @@ fi
 %{_exec_prefix}/dashboard
 %{_datadir}/create_db.sql
 %{_datadir}/upgrade_db.sql
-%{_datadir}/create_roles.sql
-%{_datadir}/create_schema.sql
+%{_datadir}/01_create_roles.sql
+%{_datadir}/02_create_schema.sql
 %{_sysconfdir}/init.d/kool-server
 %{_systemddir}/kool-server.service
 %config(noreplace) %{_sysconfdir}/kool-server.conf

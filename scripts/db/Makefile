@@ -3,8 +3,8 @@ include $(TOPDIR)/Config.mk
 
 DIRS  =
 SRCS  = create_db.sql
-SRCS += create_roles.sql
-SRCS += create_schema.sql
+SRCS += 01_create_roles.sql
+SRCS += 02_create_schema.sql
 SRCS += upgrade_db.sql
 
 install:
