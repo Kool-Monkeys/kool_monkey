@@ -1,0 +1,9 @@
+FROM centos:centos7
+MAINTAINER Sergio Visinoni <piffio@piffio.org>
+
+COPY bin/kool-server /
+COPY conf/kool-server*.conf /
+
+ENTRYPOINT [ "/kool-server", "-conf"]
+# Default will be production
+CMD [ "/kool-server.conf" ]
