@@ -78,3 +78,6 @@ info:
 rpm-build:
 	rpmbuild --quiet --nobuild --rcfile ${RPM_DIR}/rpmrc --macros=/usr/lib/rpm/macros:${RPM_DIR}/rpmmacros ${RPM_DIR}/kool-server.spec 2>&1 | grep error; if [ $$? == 0 ] ; then exit 1; fi
 	rpmbuild -bb --rcfile ${RPM_DIR}/rpmrc --target x86_64-linux --macros=/usr/lib/rpm/macros:${RPM_DIR}/rpmmacros --buildroot=${TOPDIR}/dest/kool-server ${RPM_DIR}/kool-server.spec
+
+docker-agent: install
+	docker build -t kool-agent -f Dockerfile.agent .
