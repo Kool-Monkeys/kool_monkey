@@ -52,7 +52,7 @@ func jobs_orchestrator(jobsChan chan []SingleTest) error {
 		}
 
 		// If not in the list, kill the relevant goroutine
-		for index, _ := range jobsList {
+		for index := range jobsList {
 			if _, ok := activeJobs[index]; !ok {
 				fmt.Printf("[Orchestrator] Job ID %d has been disabled, shutting it down\n",
 					index)
