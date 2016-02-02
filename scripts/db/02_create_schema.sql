@@ -1,3 +1,5 @@
+\connect monkey
+
 DROP TABLE IF EXISTS result;
 DROP TABLE IF EXISTS testAgent;
 DROP TABLE IF EXISTS test;

@@ -5,5 +5,4 @@ COPY bin/kool-server /
 COPY conf/kool-server*.conf /
 
 ENTRYPOINT [ "/kool-server", "-conf"]
-# Default will be production
-CMD [ "/kool-server.conf" ]
+CMD [ "/kool-server-docker.conf" ]

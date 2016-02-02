@@ -2,3 +2,5 @@ FROM postgres:9.5
 MAINTAINER Sergio Visinoni <piffio@piffio.org>
 
 COPY scripts/db/[0-9][0-9]_*.sql /docker-entrypoint-initdb.d/
+COPY scripts/db/trust-docker-network.sh /docker-entrypoint-initdb.d/
+COPY conf/pg_hba_docker.conf /

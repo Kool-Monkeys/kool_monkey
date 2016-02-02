@@ -12,5 +12,4 @@ COPY bin/kool-agent /
 COPY conf/kool-agent*.conf /
 
 ENTRYPOINT [ "/kool-agent", "-conf"]
-# Default will be production
-CMD [ "/kool-agent.conf" ]
+CMD [ "/kool-agent-docker.conf" ]
