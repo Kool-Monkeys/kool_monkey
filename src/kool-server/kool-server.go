@@ -33,10 +33,11 @@ type DbConnection struct {
 }
 
 type Result struct {
-	AgentId      int64  `json:"agentId"`
-	TestId       int64  `json:"testId"`
-	ResponseTime int64  `json:"response_time"`
-	Url          string `json:"url"`
+	AgentId     int64  `json:"agentId"`
+	TestId      int64  `json:"testId"`
+	TestRuntime int64  `json:"testRuntime"`
+	TestResults string `json:"testResults"`
+	Url         string `json:"url"`
 }
 
 type TestCount struct {
@@ -98,11 +99,11 @@ func result(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_, err = DB.Exec(
-		"INSERT INTO result (agent_id, test_id, url, response_time) VALUES ($1, $2, $3, $4)",
+		"INSERT INTO result (agent_id, test_id, test_runtime, test_results) VALUES ($1, $2, $3, $4)",
 		resultData.AgentId,
 		resultData.TestId,
-		resultData.Url,
-		resultData.ResponseTime,
+		resultData.TestRuntime,
+		resultData.TestResults,
 	)
 	if err != nil {
 		fmt.Println(err)

@@ -13,7 +13,7 @@ CREATE TABLE agent (
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON agent TO kool_writer;
 GRANT SELECT ON agent TO kool_reader;
-GRANT SELECT,INSERT,DELETE,UPDATE ON agent_id_seq TO kool_writer;
+GRANT SELECT,USAGE ON agent_id_seq TO kool_writer;
 GRANT SELECT ON agent_id_seq TO kool_reader;
 
 CREATE TABLE test (
@@ -40,8 +40,8 @@ CREATE TABLE result (
 		id SERIAL PRIMARY KEY,
 		agent_id INTEGER NOT NULL REFERENCES agent(id),
 		test_id INTEGER NOT NULL REFERENCES test(id),
-		url text NOT NULL,
-		response_time BIGINT NOT NULL,
+		test_runtime BIGINT NOT NULL,
+		test_results jsonb,
 		timestamp TIMESTAMP NOT NULL DEFAULT now()
 );
 
