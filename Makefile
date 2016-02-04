@@ -57,6 +57,7 @@ postgresql-stop:
 	@if [ -f $(RUN_DIR)/postmaster.pid ]; then \
 		echo -n "\\033[1;35m+++ Stopping postgres\\033[39;0m "; \
 		while kill -INT `cat $(RUN_DIR)/postmaster.pid` 2>/dev/null; do echo -n "\\033[1;35m.\\033[39;0m "; sleep 1; done; echo; \
+		rm -rf $(RUN_DIR)/data $(RUN_DIR)/postmaster.pid; \
 	fi
 
 kool-server: deps
