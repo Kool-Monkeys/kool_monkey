@@ -40,7 +40,7 @@ func uploadResults(job *Job, testResults string, duration time.Duration) error {
 	resultData["testId"] = job.TestId
 	resultData["url"] = job.TargetURL
 	resultData["testResults"] = testResults
-	resultData["response_time"] = duration
+	resultData["testRuntime"] = duration
 	resultData["agentId"] = Conf.AgentId
 
 	b, _ := json.Marshal(resultData)

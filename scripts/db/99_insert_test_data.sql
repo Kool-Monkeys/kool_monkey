@@ -21,12 +21,12 @@ INSERT INTO test
 VALUES (
 	2,
 	'http://www.google.com',
-	120
+	45
 );
 
 -- Enable tests for agent 1
 INSERT INTO testagent
 VALUES (
 	1,
-	1
+	2
 );
