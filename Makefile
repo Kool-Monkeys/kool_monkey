@@ -66,12 +66,19 @@ kool-server: deps
 kool-agent: deps
 	GOPATH=${PROJECT} go install kool-agent
 
+tests: deps
+	GOPATH=${PROJECT} go test -cover -v kool-agent
+	GOPATH=${PROJECT} go test -cover -v kool-server
+
 deps: ${GODEPS}
 github.com/% :
 	GOPATH=${PROJECT} go get $@
 
 help:
 	@echo "\033[1;35mmake all\\033[39;0m - build, install and bring up the regress environment."
+	@echo "\033[1;35mmake clean\\033[39;0m - stop and clean the regress environment."
+	@echo "\033[1;35mmake rpm\\033[39;0m - build the rpm package."
+	@echo "\033[1;35mmake tests\\033[39;0m - run the tests."
 
 info:
 	@echo "To connect to postgresql database: \033[1;35mpsql -h $(PGSQL_DATA) -p $(PGSQL_PORT) $(DATABASE)\\033[39;0m"
