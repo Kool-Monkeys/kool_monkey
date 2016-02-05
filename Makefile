@@ -10,6 +10,7 @@ GODEPS=\
 	github.com/codegangsta/negroni
 
 all:
+	@$(MAKE) kool-agent
 	@$(MAKE) kool-server
 	@$(MAKE) start-environment
 
@@ -77,15 +78,24 @@ github.com/% :
 help:
 	@echo "\033[1;35mmake all\\033[39;0m - build, install and bring up the regress environment."
 	@echo "\033[1;35mmake clean\\033[39;0m - stop and clean the regress environment."
-	@echo "\033[1;35mmake rpm\\033[39;0m - build the rpm package."
+	@echo "\033[1;35mmake rpm-build\\033[39;0m - run the tests and generate the rpm packages."
+	@echo "\033[1;35mmake generate-rpm\\033[39;0m - generate the rpm packages."
 	@echo "\033[1;35mmake tests\\033[39;0m - run the tests."
 
 info:
 	@echo "To connect to postgresql database: \033[1;35mpsql -h $(PGSQL_DATA) -p $(PGSQL_PORT) $(DATABASE)\\033[39;0m"
 
 rpm-build:
-	rpmbuild --quiet --nobuild --rcfile ${RPM_DIR}/rpmrc --macros=/usr/lib/rpm/macros:${RPM_DIR}/rpmmacros ${RPM_DIR}/kool-server.spec 2>&1 | grep error; if [ $$? == 0 ] ; then exit 1; fi
-	rpmbuild -bb --rcfile ${RPM_DIR}/rpmrc --target x86_64-linux --macros=/usr/lib/rpm/macros:${RPM_DIR}/rpmmacros --buildroot=${TOPDIR}/dest/kool-server ${RPM_DIR}/kool-server.spec
+	@$(MAKE) kool-agent
+	@$(MAKE) kool-server
+	@$(MAKE) start-environment
+	@$(MAKE) tests
+	@$(MAKE) clean
+	@$(MAKE) generate-rpm
+
+generate-rpm:
+	@rpmbuild --quiet --nobuild --rcfile ${RPM_DIR}/rpmrc --macros=/usr/lib/rpm/macros:${RPM_DIR}/rpmmacros ${RPM_DIR}/kool-server.spec 2>&1 | grep error; if [ $$? == 0 ] ; then exit 1; fi
+	@rpmbuild -bb --rcfile ${RPM_DIR}/rpmrc --target x86_64-linux --macros=/usr/lib/rpm/macros:${RPM_DIR}/rpmmacros --buildroot=${TOPDIR}/dest/kool-server ${RPM_DIR}/kool-server.spec
 
 docker-agent: install
 	docker build -t kool-agent -f Dockerfile.agent .
