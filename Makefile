@@ -2,16 +2,17 @@ TOPDIR?=$(realpath .)
 
 include $(TOPDIR)/Config.mk
 
-DIRS=conf scripts
-BIN=kool-server kool-agent
-GODEPS=\
-	github.com/lib/pq \
-	github.com/gorilla/mux \
-	github.com/codegangsta/negroni
+DIRS  = conf
+DIRS += scripts
+
+BIN  = kool-server
+BIN += kool-agent
+
+GODEPS = github.com/lib/pq \
+	 github.com/gorilla/mux \
+	 github.com/codegangsta/negroni
 
 all:
-	@$(MAKE) kool-agent
-	@$(MAKE) kool-server
 	@$(MAKE) start-environment
 
 install: $(BIN)
@@ -67,9 +68,10 @@ kool-server: deps
 kool-agent: deps
 	GOPATH=${PROJECT} go install kool-agent
 
-tests: deps
-	GOPATH=${PROJECT} go test -cover -v kool-agent
-	GOPATH=${PROJECT} go test -cover -v kool-server
+tests: start-environment
+	@GOPATH=${PROJECT} go test -cover -v kool-agent
+	@GOPATH=${PROJECT} go test -cover -v kool-server
+	@$(MAKE) clean
 
 deps: ${GODEPS}
 github.com/% :
@@ -86,11 +88,7 @@ info:
 	@echo "To connect to postgresql database: \033[1;35mpsql -h $(PGSQL_DATA) -p $(PGSQL_PORT) $(DATABASE)\\033[39;0m"
 
 rpm-build:
-	@$(MAKE) kool-agent
-	@$(MAKE) kool-server
-	@$(MAKE) start-environment
 	@$(MAKE) tests
-	@$(MAKE) clean
 	@$(MAKE) generate-rpm
 
 generate-rpm:
