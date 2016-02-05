@@ -76,13 +76,6 @@ func connectToDb(db DbConnection) error {
 	return err
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	enc := json.NewEncoder(w)
-	hello := "Hello World!"
-	w.WriteHeader(http.StatusOK)
-	enc.Encode(&hello)
-}
-
 func result(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	enc := json.NewEncoder(w)
@@ -473,7 +466,6 @@ func main() {
 
 	/* Initialize handlers */
 	router := mux.NewRouter()
-	router.HandleFunc("/hello", hello).Methods("GET")
 	router.HandleFunc("/result", result).Methods("POST")
 	router.HandleFunc("/alive", alive).Methods("POST")
 	router.HandleFunc("/sites", addSite).Methods("POST")
