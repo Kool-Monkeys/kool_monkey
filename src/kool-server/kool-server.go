@@ -76,13 +76,6 @@ func connectToDb(db DbConnection) error {
 	return err
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	enc := json.NewEncoder(w)
-	hello := "Hello World!"
-	w.WriteHeader(http.StatusOK)
-	enc.Encode(&hello)
-}
-
 func result(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	enc := json.NewEncoder(w)
@@ -99,7 +92,7 @@ func result(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_, err = DB.Exec(
-		"INSERT INTO result (agent_id, test_id, test_runtime, test_results) VALUES ($1, $2, $3, $4)",
+		"INSERT INTO result (agentId, testId, testRuntime, testResults) VALUES ($1, $2, $3, $4)",
 		resultData.AgentId,
 		resultData.TestId,
 		resultData.TestRuntime,
@@ -162,13 +155,13 @@ func query(w http.ResponseWriter, r *http.Request) {
 		extraQuery = fmt.Sprintf(" AND timestamp BETWEEN '%s' AND '%s'", fmtDate[0].Format(timestamp), fmtDate[1].Format(timestamp))
 	}
 
-	rows, errQuery := DB.Query("SELECT id, agent_id, url, response_time, timestamp FROM result WHERE test_id = $1"+extraQuery, vars["testId"])
+	rows, errQuery := DB.Query("SELECT result.id, result.agentId, test.targetUrl, result.testRuntime, result.timestamp FROM result INNER JOIN test ON test.id = result.testId WHERE test.id = $1" + extraQuery, vars["testId"])
 	if errQuery == nil {
 		var id int
 		var agentId int
 		var url string
 		var responseTime int
-		var timestamp string
+		var timestamp time.Time
 
 		for i := 0; rows.Next(); i++ {
 			result := make(map[string]interface{})
@@ -213,10 +206,10 @@ func alive(w http.ResponseWriter, r *http.Request) {
 	ip := strings.Split(r.RemoteAddr, ":")[0]
 	id, ok := dat["agentId"]
 	if ok {
-		_, err = DB.Exec("UPDATE agent SET ip = $1, last_alive = now() WHERE id = $2", ip, dat["agentId"])
+		_, err = DB.Exec("UPDATE agent SET ip = $1, lastAlive = now() WHERE id = $2", ip, dat["agentId"])
 		agentOk = (err == nil)
 	} else {
-		err = DB.QueryRow("INSERT INTO agent (ip, last_alive) VALUES ($1, now()) RETURNING id", ip).Scan(&id)
+		err = DB.QueryRow("INSERT INTO agent (ip, lastAlive) VALUES ($1, now()) RETURNING id", ip).Scan(&id)
 		agentOk = (err == nil)
 	}
 
@@ -374,7 +367,7 @@ func getAgents(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	rows, err := DB.Query("SELECT id, ip, last_alive FROM agent WHERE id = $1 OR $1 = 0", agentId)
+	rows, err := DB.Query("SELECT id, ip, lastAlive FROM agent WHERE id = $1 OR $1 = 0", agentId)
 	defer rows.Close()
 
 	if err != nil {
@@ -473,7 +466,6 @@ func main() {
 
 	/* Initialize handlers */
 	router := mux.NewRouter()
-	router.HandleFunc("/hello", hello).Methods("GET")
 	router.HandleFunc("/result", result).Methods("POST")
 	router.HandleFunc("/alive", alive).Methods("POST")
 	router.HandleFunc("/sites", addSite).Methods("POST")

@@ -42,7 +42,7 @@ postgresql-start: $(RUN_DIR)
 		rm -rf $(PGSQL_DATA) > /dev/null; \
 		mkdir -p $(PGSQL_LOGDIR); \
 		$(PGSQL_BIN)/initdb --pgdata=$(PGSQL_DATA) --auth="ident" > /dev/null; \
-		$(PGSQL_BIN)/postgres -c config_file=${CONF_DIR}/postgresql.conf -k $(PGSQL_DATA) -D $(PGSQL_DATA) 1> $(PGSQL_LOG) < /dev/null 2>&1 & \
+		$(PGSQL_BIN)/postgres -c config_file=${CONF_DIR}/postgresql.conf -k $(PGSQL_DATA) -D $(PGSQL_DATA) > $(PGSQL_LOG) < /dev/null 2>&1 & \
 		echo $$! > $(RUN_DIR)/postmaster.pid; \
 		while ! $(USR_BIN)/psql -h $(PGSQL_DATA) -p $(PGSQL_PORT) -c "select current_timestamp" template1 > /dev/null 2>&1; do \
 			/bin/sleep 1; \

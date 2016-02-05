@@ -31,7 +31,10 @@ mkdir -p %{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_exec_prefix}/www
 mkdir -p %{buildroot}%{_exec_prefix}/dashboard
 %{__install} -Dp -m 0755 bin/kool-server %{buildroot}%{_bindir}/kool-server
-%{__install} -Dp -m 0644 dev-env/scripts/*.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/create_db.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/upgrade_db.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/00_create_roles.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/01_create_schema.sql %{buildroot}%{_datadir}
 %{__install} -Dp -m 0644 front/www/* %{buildroot}%{_exec_prefix}/www
 %{__install} -Dp -m 0644 front/dashboard/* %{buildroot}%{_exec_prefix}/dashboard
 %{__install} -Dp -m 0755 scripts/init/kool-server %{buildroot}%{_sysconfdir}/init.d/kool-server
@@ -87,13 +90,17 @@ fi
 %{_exec_prefix}/dashboard
 %{_datadir}/create_db.sql
 %{_datadir}/upgrade_db.sql
-%{_datadir}/01_create_roles.sql
-%{_datadir}/02_create_schema.sql
+%{_datadir}/00_create_roles.sql
+%{_datadir}/01_create_schema.sql
 %{_sysconfdir}/init.d/kool-server
 %{_systemddir}/kool-server.service
 %config(noreplace) %{_sysconfdir}/kool-server.conf
 
 %changelog
+* Thu Feb 4 2016 Pablo Alvarez de Sotomayor Posadillo <palvarez@ritho.net> 0.3-0
+- Fix some changed filenames.
+- Package only the sql scripts that we want.
+
 * Sun Jan 24 2016 Pablo Alvarez de Sotomayor Posadillo <palvarez@ritho.net> 0.2-0
 - Fix the sql paths to create the database during the installation.
 - Add a build option to generate the configuration for production.
