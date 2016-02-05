@@ -3,11 +3,9 @@ language: go
 addons:
   apt:
     packages:
-    - rpm
+      - rpm
 
 install: true
 
 script:
-- make kool-server
-- make clean
-- make rpm-build
+  - make rpm-build

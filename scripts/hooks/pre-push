@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# We don't count the changes that are not commited.
+git stash
+
+# Run the tests
+make tests
+rc=$?
+if [[ $rc != 0 ]] ; then
+	echo "Go tests failed, please fix them before pushing."
+fi
+
+# Apply back the uncommited changes
+git stash pop
+
+exit $rc
