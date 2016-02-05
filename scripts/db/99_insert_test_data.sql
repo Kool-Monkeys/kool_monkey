@@ -1,6 +1,4 @@
 -- Add test data
-\connect monkey
-
 -- Create an agent
 INSERT INTO agent
 VALUES (

@@ -3,9 +3,10 @@ include $(TOPDIR)/Config.mk
 
 DIRS  =
 SRCS  = create_db.sql
-SRCS += 01_create_roles.sql
-SRCS += 02_create_schema.sql
 SRCS += upgrade_db.sql
+SRCS += 00_create_roles.sql
+SRCS += 01_create_schema.sql
+SRCS += 99_insert_test_data.sql
 
 install:
 	@echo "\\033[1;35m+++ Installing conf\\033[39;0m"
