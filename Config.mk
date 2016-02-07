@@ -43,6 +43,7 @@ PGSQL_DIR=$(RUN_DIR)/pgsql
 PGSQL_LOGDIR=$(LOG_DIR)
 PGSQL_LOG=$(PGSQL_LOGDIR)/pgsql.log
 PGSQL_SCHEMA=$(DB_SCRIPTS_DIR)/create_db.sql
+PGSQL_DATA_FILES=$(DB_SCRIPTS_DIR)/99_insert_test_data.sql
 
 ifeq (UNAME),Darwin)
 	PGSQL_BIN?=/usr/lib/postgresql/$(PGSQL_VERSION)/bin
