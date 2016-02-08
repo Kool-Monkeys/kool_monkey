@@ -9,7 +9,7 @@
           <li><a v-link="'#'" @click="login()" v-show="!authenticated">Login</a>
               <a v-link="'#'" @click="logout()" v-show="authenticated">Logout</a></li>
         </ul>
-      </div>    
+      </div>
     </nav>
     <div class="container">
       <router-view></router-view>
@@ -22,49 +22,49 @@
   import {lock} from '../auth'
 
   export default {
-    ready() {
-      this.authenticated = auth.checkAuth();
+    ready () {
+      this.authenticated = auth.checkAuth()
     },
-    data() {
+    data () {
       return {
         authenticated: false,
         secretThing: ''
       }
     },
     methods: {
-      login() {
-        var self = this;
-        
+      login () {
+        var self = this
+
         lock.show((err, profile, token) => {
-          if(err) {          
+          if (err) {
             // Handle the error
-            console.log(err)          
+            console.log(err)
           } else {
             // Set the token and user profile in local storage
-            localStorage.setItem('profile', JSON.stringify(profile));
-            localStorage.setItem('id_token', token);
-            self.authenticated = true;
-          }        
-        });
+            localStorage.setItem('profile', JSON.stringify(profile))
+            localStorage.setItem('id_token', token)
+            self.authenticated = true
+          }
+        })
       },
-      logout() {
-        var self = this;
+      logout () {
+        var self = this
         // To log out, we just need to remove the token and profile
         // from local storage
-        localStorage.removeItem('id_token');
-        localStorage.removeItem('profile');
-        self.authenticated = false;      
+        localStorage.removeItem('id_token')
+        localStorage.removeItem('profile')
+        self.authenticated = false
       },
       // Make a secure call to the server by attaching
       // the user's JWT as an Authorization header
-      getSecretThing() {
-        var jwtHeader = { 'Authorization': 'Bearer ' + localStorage.getItem('id_token') };
+      getSecretThing () {
+        var jwtHeader = { 'Authorization': 'Bearer ' + localStorage.getItem('id_token') }
         this.$http.get('http://localhost:3001/secured/ping', (data) => {
           console.log(data)
-          this.secretThing = data.text;
-        }, { 
+          this.secretThing = data.text
+        }, {
           headers: jwtHeader
-        }).error((err) => console.log(err));
+        }).error((err) => console.log(err))
       }
     }
   }
