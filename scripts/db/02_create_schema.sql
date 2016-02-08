@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS agents;
 CREATE TABLE agent (
 		id SERIAL PRIMARY KEY,
 		ip cidr NOT NULL,
-		last_alive timestamp NOT NULL DEFAULT now()
+		lastAlive timestamp NOT NULL DEFAULT now()
 );
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON agent TO kool_writer;
@@ -38,10 +38,10 @@ GRANT SELECT ON testAgent TO kool_reader;
 
 CREATE TABLE result (
 		id SERIAL PRIMARY KEY,
-		agent_id INTEGER NOT NULL REFERENCES agent(id),
-		test_id INTEGER NOT NULL REFERENCES test(id),
-		test_runtime BIGINT NOT NULL,
-		test_results jsonb,
+		agentId INTEGER NOT NULL REFERENCES agent(id),
+		testId INTEGER NOT NULL REFERENCES test(id),
+		testRuntime BIGINT NOT NULL,
+		testResults jsonb,
 		timestamp TIMESTAMP NOT NULL DEFAULT now()
 );
 

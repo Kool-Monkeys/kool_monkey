@@ -31,7 +31,10 @@ mkdir -p %{buildroot}%{_datadir}
 mkdir -p %{buildroot}%{_exec_prefix}/www
 mkdir -p %{buildroot}%{_exec_prefix}/dashboard
 %{__install} -Dp -m 0755 bin/kool-server %{buildroot}%{_bindir}/kool-server
-%{__install} -Dp -m 0644 dev-env/scripts/*.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/create_db.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/upgrade_db.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/01_create_roles.sql %{buildroot}%{_datadir}
+%{__install} -Dp -m 0644 dev-env/scripts/02_create_schema.sql %{buildroot}%{_datadir}
 %{__install} -Dp -m 0644 front/www/* %{buildroot}%{_exec_prefix}/www
 %{__install} -Dp -m 0644 front/dashboard/* %{buildroot}%{_exec_prefix}/dashboard
 %{__install} -Dp -m 0755 scripts/init/kool-server %{buildroot}%{_sysconfdir}/init.d/kool-server
