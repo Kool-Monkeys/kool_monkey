@@ -9,7 +9,7 @@ os:
   - linux
 
 services:
-  - nxinx
+  - nginx
   - postgresql
 
 env:
