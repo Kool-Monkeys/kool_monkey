@@ -8,10 +8,6 @@ git:
 os:
   - linux
 
-services:
-  - postgresql
-  - nginx
-
 env:
   global:
     - LANG=en_US.UTF-8
