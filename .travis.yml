@@ -29,3 +29,6 @@ before_script:
 
 script:
   - make rpm-build
+
+notifications:
+  irc: "irc.freenode.org#kool-monkey"
