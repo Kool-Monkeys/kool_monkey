@@ -9,8 +9,8 @@ os:
   - linux
 
 services:
-  - nginx
   - postgresql
+  - nginx
 
 env:
   global:
@@ -18,10 +18,13 @@ env:
     - LC_ALL=en_US.UTF-8
 
 addons:
+  postgresql: "9.5"
   apt:
     packages:
       - nginx
       - rpm
+      - geoip-bin
+      - geoip-database
 
 install: true
 
