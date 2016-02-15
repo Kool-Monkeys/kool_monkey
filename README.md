@@ -1,5 +1,7 @@
 # Kool Monkey
 
+![Kool Monkey Logo](kool-web-ui/img/kool-monkey-logo.png)
+
 Kool Monkey is an Open and Distributed Web monitoring system that collects metrics
 related to web site perfomances, such as Response Time, Site Uptime and Network Roundtrip.
 
@@ -102,7 +104,9 @@ and see what we have done and what we are planning to do.
 
 ## License
 
-Kool Monkey is distributed under the terms of the GPLv3
+Kool Monkey is distributed under the terms of the GPLv3.
+
+Speedometer graphic by <a href="http://www.freepik.com/">Freepik</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
 
 ## Live Demo
 
@@ -178,6 +182,7 @@ the repo and go through the following steps:
 4. Start the monitoring agent:
 
     `./bin/kool-agent`
+
 
 ## Developers
 
